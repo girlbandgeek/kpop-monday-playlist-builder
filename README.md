@@ -3,5 +3,5 @@ Create a YouTube playlist from videos submitted to a hashtag on Mastodon
 
 # Requirements
 - python3
-- modules: requests
+- modules: requests, Mastodon.py
 - account on a Mastodon server
