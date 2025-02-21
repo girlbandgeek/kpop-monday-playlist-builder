@@ -20,6 +20,7 @@ my_account = mastodon.account_verify_credentials()
 print(my_account.id)
 '''
 
+'''
 following=mastodon.account_following(113966619355975527)
 
 following_posts = []
@@ -28,4 +29,7 @@ for i in following:
         following_posts.append(posts.id)
 
 print(following_posts)
+'''
 
+hashtag_posts=Mastodon.timeline_hashtag(hashtag:"FaceCards")
+print(hashtag_posts)
