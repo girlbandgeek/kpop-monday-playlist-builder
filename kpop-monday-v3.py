@@ -31,5 +31,16 @@ for i in following:
 print(following_posts)
 '''
 
-hashtag_posts=Mastodon.timeline_hashtag(hashtag:"FaceCards")
-print(hashtag_posts)
+hashtag_posts={}
+hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards")
+# Print the first status
+#print(hashtag_posts[1])
+
+# Print each status on separate line:
+#for key in hashtag_posts:
+#    print(key)
+
+hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
+hashtag_dict = dict(hashtag_dict)
+for key, value in hashtag_dict.items():
+    print(f"{key}: {value}")
