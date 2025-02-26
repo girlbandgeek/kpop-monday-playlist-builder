@@ -14,22 +14,6 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-'''
-# get my account id
-my_account = mastodon.account_verify_credentials()
-print(my_account.id)
-'''
-
-'''
-following=mastodon.account_following(113966619355975527)
-
-following_posts = []
-for i in following:
-    for posts in mastodon.account_statuses(i):
-        following_posts.append(posts.id)
-
-print(following_posts)
-'''
 
 hashtag_posts={}
 hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards")
@@ -43,4 +27,13 @@ hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards")
 hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
 hashtag_dict = dict(hashtag_dict)
 for key, value in hashtag_dict.items():
-    print(f"{key}: {value}")
+    print(f"{key}:")
+    print(f"account id: ", hashtag_dict[key]["id"])
+    print(f"account name: ", hashtag_dict[key]["account"]["acct"])
+    for kkey in hashtag_dict[key].keys():
+        # Print each key and the value in the status
+        print(f"{kkey}: ", hashtag_dict[key][kkey])
+'''
+for key in hashtag_dict[0].keys():
+    print(f"{key}: ", hashtag_dict[0][key])
+'''
