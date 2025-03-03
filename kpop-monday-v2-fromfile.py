@@ -7,13 +7,8 @@ import random
 
 load_dotenv()
 
-'''
 # Import data file
 f_input = open("/home/azureuser/Work/Data/facecards.out", "r")
-print(type(f_input))
-foo = from_json(f_input: str)
-print(type(foo))
-'''
 
 mastodon = Mastodon(
         client_id=os.getenv("Client_key"),
@@ -23,18 +18,16 @@ mastodon = Mastodon(
 )
 
 
+'''
 
+print(hashtag_posts)
+'''
 hashtag_posts={}
 hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards")
-hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
-# print(type(hashtag_dict)) # type=list
-hashtag_dict = dict(hashtag_dict)
-# print(type(hashtag_dict)) # type=dict
-print(hashtag_dict)
 
-'''
 foo=json_out=staticfrom_json(json_str: str)→ Entity
 print(foo)
+'''
 staticfrom_json(json_str: str)→ Entity
 hashtag_posts={}
 hashtag_posts=print(f_input.read())
