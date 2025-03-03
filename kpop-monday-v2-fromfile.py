@@ -4,52 +4,17 @@ import time
 from dotenv import load_dotenv
 import os
 import random
+import pickle
+# define some variables:
+htag = 'FaceCards'
 
 load_dotenv()
 
-# Import data file
-f_input = open("/home/azureuser/Work/Data/facecards.out", "r")
+# Open data file:
+f = open('../Data/'+htag+'.pickle', 'rb')
 
-mastodon = Mastodon(
-        client_id=os.getenv("Client_key"),
-        client_secret=os.getenv("Client_secret"),
-        access_token=os.getenv("access_token"),
-        api_base_url="https://mstdn.social"
-)
+hashtag_dict = pickle.loads(f.read())
 
-
-'''
-
-print(hashtag_posts)
-'''
-hashtag_posts={}
-hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards")
-
-foo=json_out=staticfrom_json(json_str: str)→ Entity
-print(foo)
-'''
-staticfrom_json(json_str: str)→ Entity
-hashtag_posts={}
-hashtag_posts=print(f_input.read())
-
-hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
-hashtag_dict = dict(hashtag_dict)
-# print(hashtag_dict)
-for key, value in hashtag_dict.items():
-    print(f"{key}:")
-    for kkey in hashtag_dict[key].keys():
-        # Print each key and the value in the status
-        print(f"{kkey}: ", hashtag_dict[key][kkey])
-hashtag_dict = dict(hashtag_dict)
-for key, value in hashtag_dict.items():
-    print(f"{key}:")
-
-# Print each status on separate line:
-for key in hashtag_posts:
-    print(key)
-
-hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
-hashtag_dict = dict(hashtag_dict)
 for key, value in hashtag_dict.items():
     print(f"{key}:")
     # print(f"account id: ", hashtag_dict[key]["id"])
@@ -60,6 +25,3 @@ for key, value in hashtag_dict.items():
     for kkey in hashtag_dict[key].keys():
         # Print each key and the value in the status
         print(f"{kkey}: ", hashtag_dict[key][kkey])
-for key in hashtag_dict[0].keys():
-    print(f"{key}: ", hashtag_dict[0][key])
-'''

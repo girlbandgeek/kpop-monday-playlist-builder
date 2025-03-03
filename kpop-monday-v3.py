@@ -1,9 +1,23 @@
 # foo
 from mastodon import Mastodon
-import time
+import datetime
+from datetime import date
+from datetime import timedelta
+from datetime import time
 from dotenv import load_dotenv
 import os
 import random
+#from datetime import datetime, date, time, timezone
+# define some variables:
+htag = 'FaceCards'
+start_date = date(2025, 2, 17)
+day = timedelta(days=1)
+end_date = start_date + day
+t_time = time(0, 0)
+my_min = datetime.datetime.combine(start_date, t_time)
+my_max = datetime.datetime.combine(end_date, t_time)
+# print('my_min: ', my_min)
+# print('my_max: ', my_max)
 
 load_dotenv()
 
@@ -14,9 +28,9 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-
 hashtag_posts={}
-hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards")
+hashtag_posts=mastodon.timeline_hashtag(hashtag = htag, min_id = my_min, max_id = my_max)
+#hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards", min_id = datetime.datetime(2025, 2, 17, 0, 0), max_id = datetime.datetime(2025, 2, 18, 0, 0))
 # Print the first status
 #print(hashtag_posts[1])
 
