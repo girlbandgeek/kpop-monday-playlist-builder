@@ -1,4 +1,4 @@
-# foo
+# Dump selected statuses to file using pickle format
 from mastodon import Mastodon
 import time
 from dotenv import load_dotenv

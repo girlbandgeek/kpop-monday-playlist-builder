@@ -1,4 +1,4 @@
-# foo
+# Pull selected statuses with Mastodon API and process them
 from mastodon import Mastodon
 import datetime
 from datetime import date

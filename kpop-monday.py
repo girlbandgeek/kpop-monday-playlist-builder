@@ -1,3 +1,4 @@
+# Early attempt as script to generate toots
 import requests
 import configparser
 

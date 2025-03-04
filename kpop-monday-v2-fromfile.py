@@ -1,4 +1,4 @@
-# foo
+# Process statuses previously downloaded to file
 from mastodon import Mastodon
 import time
 from dotenv import load_dotenv
