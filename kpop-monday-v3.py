@@ -30,13 +30,6 @@ mastodon = Mastodon(
 
 hashtag_posts={}
 hashtag_posts=mastodon.timeline_hashtag(hashtag = htag, min_id = my_min, max_id = my_max)
-#hashtag_posts=mastodon.timeline_hashtag(hashtag = "FaceCards", min_id = datetime.datetime(2025, 2, 17, 0, 0), max_id = datetime.datetime(2025, 2, 18, 0, 0))
-# Print the first status
-#print(hashtag_posts[1])
-
-# Print each status on separate line:
-#for key in hashtag_posts:
-#    print(key)
 
 hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
 hashtag_dict = dict(hashtag_dict)
