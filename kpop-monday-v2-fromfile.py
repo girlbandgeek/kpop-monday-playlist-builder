@@ -1,12 +1,15 @@
 # Process statuses previously downloaded to file
+# Usage: python3 kpop-monday-v2-fromfile.py HashTag
 from mastodon import Mastodon
 import time
 from dotenv import load_dotenv
 import os
+import sys
 import random
 import pickle
 # define some variables:
-htag = 'FaceCards'
+# htag = 'FaceCards'
+htag = sys.argv[1]
 
 load_dotenv()
 
