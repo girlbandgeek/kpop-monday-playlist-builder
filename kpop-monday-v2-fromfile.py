@@ -19,14 +19,21 @@ f = open('../Data/'+htag+'.pickle', 'rb')
 hashtag_dict = pickle.loads(f.read())
 
 for key, value in hashtag_dict.items():
-    print(f"{key}:")
-    # print(f"account id: ", hashtag_dict[key]["id"])
+    print(f"record number: ", key)
     print(f"account id: ", hashtag_dict[key]["account"]["id"])
-    print(f"account username: ", hashtag_dict[key]["account"]["username"])
     print(f"account name: ", hashtag_dict[key]["account"]["acct"])
     print(f"status id: ", hashtag_dict[key]["id"])
     print(f"content: ", hashtag_dict[key]["content"])
-    print(f"tags: ", hashtag_dict[key]["tags"])
+    tag_dict = hashtag_dict[key]["tags"]
+    print(f"tag_dict type: ", type(tag_dict))
+    print(f"tag_dict: ", tag_dict)
+    tag_list=[]
+    for x in tag_dict:
+        tag_list.append(x["name"])
+        # print(f"name of the tag: ", x["name"])
+    print(f"tag_list: ", tag_list)
+    print(f"content type: ", type(hashtag_dict[key]["content"]))
+    print(f"tags type: ", type(hashtag_dict[key]["tags"]))
     for kkey in hashtag_dict[key].keys():
         # Print each key and the value in the status
         print(f"{kkey}: ", hashtag_dict[key][kkey])
