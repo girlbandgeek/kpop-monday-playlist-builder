@@ -5,6 +5,7 @@ import time
 from dotenv import load_dotenv
 import os
 import sys
+import re
 import random
 import pickle
 # define some variables:
@@ -23,7 +24,11 @@ for key, value in hashtag_dict.items():
     print(f"account id: ", hashtag_dict[key]["account"]["id"])
     print(f"account name: ", hashtag_dict[key]["account"]["acct"])
     print(f"status id: ", hashtag_dict[key]["id"])
-    print(f"content: ", hashtag_dict[key]["content"])
+    #print(f"content: ", hashtag_dict[key]["content"])
+    # Note: pattern matching is not working yet!!!
+    ccontent = hashtag_dict[key]["content"]
+    match = re.match('https://www.youtube.com/watch?v=(\w){11}', ccontent)
+    print(f"videos: ", match.groups())
     tag_dict = hashtag_dict[key]["tags"]
     print(f"tag_dict type: ", type(tag_dict))
     print(f"tag_dict: ", tag_dict)
