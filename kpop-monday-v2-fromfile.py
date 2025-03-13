@@ -27,8 +27,18 @@ for key, value in hashtag_dict.items():
     #print(f"content: ", hashtag_dict[key]["content"])
     # Note: pattern matching is not working yet!!!
     ccontent = hashtag_dict[key]["content"]
-    match = re.match('https://www.youtube.com/watch?v=(\w){11}', ccontent)
-    print(f"videos: ", match.groups())
+    print(f"ccontent: ", ccontent)
+    # match = re.findall(r'www\.youtube\.com/watch\?v=(\w+)', ccontent)
+    match = re.findall(r'(www\.youtube\.com/watch\?v=|youtu\.be/)(\w+)', ccontent)
+    if len(match) > 0: 
+        print(f"videos: ", match)
+        vid_list=[]
+        for iitem in match:
+            vid_list.append(iitem[1])
+        print("video ID's: ", vid_list)
+    else:
+        print(f"videos: NOT MATCHED!!!")
+  
     tag_dict = hashtag_dict[key]["tags"]
     print(f"tag_dict type: ", type(tag_dict))
     print(f"tag_dict: ", tag_dict)
@@ -39,6 +49,8 @@ for key, value in hashtag_dict.items():
     print(f"tag_list: ", tag_list)
     print(f"content type: ", type(hashtag_dict[key]["content"]))
     print(f"tags type: ", type(hashtag_dict[key]["tags"]))
+    '''
     for kkey in hashtag_dict[key].keys():
         # Print each key and the value in the status
         print(f"{kkey}: ", hashtag_dict[key][kkey])
+    '''
