@@ -29,7 +29,7 @@ for key, value in hashtag_dict.items():
     ccontent = hashtag_dict[key]["content"]
     print(f"ccontent: ", ccontent)
     # match = re.findall(r'www\.youtube\.com/watch\?v=(\w+)', ccontent)
-    match = re.findall(r'(www\.youtube\.com/watch\?v=|youtu\.be/)(\w+)', ccontent)
+    match = re.findall(r'(www\.youtube\.com/watch\?v=|youtu\.be/)([\w-]+)', ccontent)
     if len(match) > 0: 
         print(f"videos: ", match)
         vid_list=[]
