@@ -31,7 +31,7 @@ for key, value in hashtag_dict.items():
     print(f"account id: ", hashtag_dict[key]["account"]["id"])
     print(f"account name: ", hashtag_dict[key]["account"]["acct"])
     
-    rlist.append(hashtag_dict[key]["id"])
+    # rlist.append(hashtag_dict[key]["id"])
     rlist.append(hashtag_dict[key]["created_at"])
     rlist.append(hashtag_dict[key]["account"]["id"])
     rlist.append(hashtag_dict[key]["account"]["acct"])
@@ -65,7 +65,10 @@ for key, value in hashtag_dict.items():
     rlist.append(tag_list)
     # print(f"content type: ", type(hashtag_dict[key]["content"]))
     # print(f"tags type: ", type(hashtag_dict[key]["tags"]))
-    output_dict[key] = rlist
+
+    # we will use the status id as the dict key
+    kd_key = hashtag_dict[key]["id"]
+    output_dict[kd_key] = rlist
 
     '''
     for kkey in hashtag_dict[key].keys():
@@ -75,3 +78,7 @@ for key, value in hashtag_dict.items():
 
 print("output_dict:")
 print(output_dict)
+
+# Let's explore the relations betweeen the statuses and the timestamps
+for key in output_dict:
+    print(key, output_dict[key][0], output_dict[key][1])
