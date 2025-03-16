@@ -40,6 +40,8 @@ hashtag_posts=mastodon.timeline_hashtag(hashtag = htag, min_id = my_min, max_id 
 
 hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
 hashtag_dict = dict(hashtag_dict)
+# define a dict to contain the output
+output_dict={}
 
 for key, value in hashtag_dict.items():
     # output_list.append(hashtag_dict[key]["id"])
