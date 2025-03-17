@@ -22,7 +22,9 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat):
+def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
+    print("hhtag", "mmy_min", "mmy_max", "since_stat", "max_key")
+    print(hhtag, mmy_min, mmy_max, since_stat, max_key)
     hashtag_posts={}
     # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max)
     # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max, since_id = since_stat)
@@ -37,9 +39,12 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat):
     hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
     hashtag_dict = dict(hashtag_dict)
     # define a dict to contain the output
-    output_dict={}
+    results_dict={}
 
     for key, value in hashtag_dict.items():
+        # don't add duplicate records
+        if hashtag_dict[key]["id"] == max_key:
+            break
         # output_list.append(hashtag_dict[key]["id"])
         rlist=[]
 
@@ -101,17 +106,26 @@ my_max = datetime.datetime.combine(end_date, t_time)
 # since_status=parser.parse("2025-03-10 10:48:52+00:00")
 since_status=""
 output_dict={}
+max_key='0'
 
 while(True):
-    records_to_add=retrieve_statuses(htag, my_min, my_max, since_status)
+    records_to_add=retrieve_statuses(htag, my_min, my_max, since_status, max_key)
     # exit loop if status list is empty
+    '''
     if len(records_to_add) >= 1:
         continue
     else:
         break
+    '''
+
+    if len(records_to_add) == 0:
+        break
+
     # find latest record
     max_key = max(records_to_add, key=records_to_add.get)
-    since_status=parser.parse(records_to_add[max_key][0])
+    #since_status=parser.parse(records_to_add[max_key][0])
+    since_status=(records_to_add[max_key][0])
+    print(f"max_key: ", max_key, "since_status: ", since_status, "max_key: ", max_key)
     output_dict.update(records_to_add)
 
 print("output_dict:")
