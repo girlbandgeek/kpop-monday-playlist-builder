@@ -45,6 +45,8 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         # don't add duplicate records
         if hashtag_dict[key]["id"] == max_key:
             break
+        else:
+            continue
         # output_list.append(hashtag_dict[key]["id"])
         rlist=[]
 
