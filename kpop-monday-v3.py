@@ -79,8 +79,8 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat):
 
         # we will use the status id as the dict key
         kd_key = hashtag_dict[key]["id"]
-        output_dict[kd_key] = rlist
-    return output_dict
+        results_dict[kd_key] = rlist
+    return results_dict
     
 
 # define some variables:
@@ -98,10 +98,21 @@ my_min = datetime.datetime.combine(start_date, t_time)
 my_max = datetime.datetime.combine(end_date, t_time)
 # For first go, set since_status to 0:
 #since_status="113664559726097118"
-since_status=parser.parse("2025-03-10 10:48:52+00:00")
-# since_status=""
+# since_status=parser.parse("2025-03-10 10:48:52+00:00")
+since_status=""
+output_dict={}
 
-output_dict=retrieve_statuses(htag, my_min, my_max, since_status)
+while(True):
+    records_to_add=retrieve_statuses(htag, my_min, my_max, since_status)
+    # exit loop if status list is empty
+    if len(records_to_add) >= 1:
+        continue
+    else:
+        break
+    # find latest record
+    max_key = max(records_to_add, key=records_to_add.get)
+    since_status=parser.parse(records_to_add[max_key][0])
+    output_dict.update(records_to_add)
 
 print("output_dict:")
 print(output_dict)
