@@ -28,7 +28,11 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat):
     # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max, since_id = since_stat)
     # Need to add if statement here. There will be 2 different "mastodon.timeline_hashtag" calls, depending on whether
     # since_id has been set...
-    hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max, since_id = since_stat)
+    if since_stat == "":
+        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max)
+    else:
+        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, max_id = my_max, since_id = since_stat)
+
 
     hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
     hashtag_dict = dict(hashtag_dict)
@@ -95,6 +99,7 @@ my_max = datetime.datetime.combine(end_date, t_time)
 # For first go, set since_status to 0:
 #since_status="113664559726097118"
 since_status=parser.parse("2025-03-10 10:48:52+00:00")
+# since_status=""
 
 output_dict=retrieve_statuses(htag, my_min, my_max, since_status)
 
