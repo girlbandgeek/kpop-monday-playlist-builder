@@ -4,6 +4,7 @@ import datetime
 from datetime import date
 from datetime import timedelta
 from datetime import time
+from dateutil import parser
 from dotenv import load_dotenv
 import os
 import sys
@@ -21,9 +22,13 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat)
+def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat):
     hashtag_posts={}
-    hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max)
+    # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max)
+    # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max, since_id = since_stat)
+    # Need to add if statement here. There will be 2 different "mastodon.timeline_hashtag" calls, depending on whether
+    # since_id has been set...
+    hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max, since_id = since_stat)
 
     hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
     hashtag_dict = dict(hashtag_dict)
@@ -73,11 +78,6 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat)
         output_dict[kd_key] = rlist
     return output_dict
     
-        '''
-        for kkey in hashtag_dict[key].keys():
-            # Print each key and the value in the status
-            print(f"{kkey}: ", hashtag_dict[key][kkey])
-        '''
 
 # define some variables:
 
@@ -93,7 +93,8 @@ t_time = time(0, 0)
 my_min = datetime.datetime.combine(start_date, t_time)
 my_max = datetime.datetime.combine(end_date, t_time)
 # For first go, set since_status to 0:
-since_status=0
+#since_status="113664559726097118"
+since_status=parser.parse("2025-03-10 10:48:52+00:00")
 
 output_dict=retrieve_statuses(htag, my_min, my_max, since_status)
 
