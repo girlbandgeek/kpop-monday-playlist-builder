@@ -42,6 +42,7 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     results_dict={}
     # don't process duplicate records
     
+    '''
     for key in hashtag_dict.keys():
         if hashtag_dict[key]["id"] == max_key:
             rec_del_flag="True"
@@ -55,6 +56,7 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
 
     if max_key in (hashtag_dict.keys()):
         del hashtag_dict[max_key]
+    '''
 
     for key, value in hashtag_dict.items():
         '''
@@ -97,11 +99,21 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
             tag_list.append(x["name"])
             # print(f"name of the tag: ", x["name"])
         print(f"tag_list: ", tag_list)
-        rlist.append(tag_list)
+        
+        # Make sure we are getting only #kpopmonday statuses
+        if "kpopmonday" in tag_list:
+            rlist.append(tag_list)
+        else:
+            continue    # skip if missing #kpopmonday
 
         # we will use the status id as the dict key
         kd_key = hashtag_dict[key]["id"]
         results_dict[kd_key] = rlist
+
+    # Remove potential duplicate record 
+    if max_key in results_dict.keys():
+        del results_dict[max_key]
+
     return results_dict
     
 
@@ -110,32 +122,22 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
 # htag = 'FaceCards'
 # start_date = date(2025, 2, 17)
 htag = sys.argv[1]
-# start_date = sys.argv[2]
 start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
-
-day = timedelta(days=1)
-end_date = start_date + day
+delta = timedelta(days=1, hours=12)
+# end_date = start_date + delta
 t_time = time(0, 0)
 my_min = datetime.datetime.combine(start_date, t_time)
-my_max = datetime.datetime.combine(end_date, t_time)
-# For first go, set since_status to 0:
-#since_status="113664559726097118"
-# since_status=parser.parse("2025-03-10 10:48:52+00:00")
+my_max = start_date + delta
+# For first go, set since_status to null:
 since_status=""
 output_dict={}
 max_key='0'
 
 while(True):
     records_to_add=retrieve_statuses(htag, my_min, my_max, since_status, max_key)
-    # exit loop if status list is empty
-    '''
-    if len(records_to_add) >= 1:
-        continue
-    else:
-        break
-    '''
 
     if len(records_to_add) == 0:
+        print("Records to add = 0")
         break
 
     # find latest record
@@ -149,5 +151,7 @@ print("output_dict:")
 print(output_dict)
 
 # Let's explore the relations betweeen the statuses and the timestamps
-for key in output_dict:
-    print(key, output_dict[key][0], output_dict[key][1])
+ccount=1
+for key in sorted(output_dict.keys()):
+    print("RECORD: ",ccount, key, output_dict[key][0], output_dict[key][1], output_dict[key][2])
+    ccount=ccount+1
