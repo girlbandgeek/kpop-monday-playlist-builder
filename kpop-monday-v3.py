@@ -31,40 +31,19 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     # Need to add if statement here. There will be 2 different "mastodon.timeline_hashtag" calls, depending on whether
     # since_id has been set...
     if since_stat == "":
-        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max)
+        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = mmy_min, max_id = mmy_max)
     else:
-        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, max_id = my_max, since_id = since_stat)
+        #hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, max_id = my_max, since_id = since_stat)
+        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = since_stat, max_id = mmy_max)
 
 
     hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
     hashtag_dict = dict(hashtag_dict)
+
     # define a dict to contain the output
     results_dict={}
-    # don't process duplicate records
     
-    '''
-    for key in hashtag_dict.keys():
-        if hashtag_dict[key]["id"] == max_key:
-            rec_del_flag="True"
-        else:
-            rec_del_flag="False"
-
-
-    if (rec_del_flag):
-        del hashtag_dict[key]
-   
-
-    if max_key in (hashtag_dict.keys()):
-        del hashtag_dict[max_key]
-    '''
-
     for key, value in hashtag_dict.items():
-        '''
-        if hashtag_dict[key]["id"] == max_key:
-            break
-        else:
-            continue
-        '''
         rlist=[]
 
         print(f"record number: ", key)
