@@ -71,7 +71,7 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
             rlist.append(new_vid_list)
         else:
             print(f"videos: NOT MATCHED!!!")
-            rlist.append({})
+            rlist.append([])
 
         # Generate a list of tags      
         tag_dict = hashtag_dict[key]["tags"]
@@ -137,16 +137,39 @@ for key in sorted(output_dict.keys()):
     ccount=ccount+1
     print("RECORD: ",ccount, key, output_dict[key][0], output_dict[key][1], output_dict[key][2])
 
-# Generate some stats for this collection of statuses
+# Build the list of playlist videos, and Generate some 
+# stats for this collection of statuses
+playlist_vids = []
 stats_dict = {}
 der_count=0
-for key in output_dict.keys():
+for key in sorted(output_dict.keys()):
+    if output_dict[key][3] != []:
+        for i_item in output_dict[key][3]:
+            playlist_vids.append(i_item)
+    # playlist_vids.append(output_dict[key][3])
     if output_dict[key][2] in stats_dict.keys():
         stats_dict[output_dict[key][2]] = stats_dict[output_dict[key][2]] + 1
     else:
         stats_dict[output_dict[key][2]] = 1
         
-print(f"Total number of posts for ", htag, "is: ", ccount)
+leader_count = max(stats_dict.values())
+leader_board = ""
+for key, value in stats_dict.items():
+    if value == leader_count:
+        if leader_board == "":
+            leader_board = key
+        else:
+            leader_board = leader_board + ', ' + key
+    else:
+        continue
 
+
+
+print(f"Total number of posts for ", htag, "is: ", ccount)
+print(f"Top contributor(s) this week with", leader_count, "posts are: ", leader_board)
+print(f"Playlist videos :", playlist_vids)
+
+'''
 print("stats_dict:")
 print(stats_dict)
+'''
