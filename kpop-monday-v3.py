@@ -132,16 +132,16 @@ print("output_dict:")
 print(output_dict)
 
 # Let's explore the relations betweeen the statuses and the timestamps
-ccount=1
+ccount=0
 for key in sorted(output_dict.keys()):
-    print("RECORD: ",ccount, key, output_dict[key][0], output_dict[key][1], output_dict[key][2])
     ccount=ccount+1
+    print("RECORD: ",ccount, key, output_dict[key][0], output_dict[key][1], output_dict[key][2])
 
 # Generate some stats for this collection of statuses
 stats_dict = {}
 der_count=0
 for key in output_dict.keys():
-    if output_dict[key][2] in stats_dict.keys()
+    if output_dict[key][2] in stats_dict.keys():
         stats_dict[output_dict[key][2]] = stats_dict[output_dict[key][2]] + 1
     else:
         stats_dict[output_dict[key][2]] = 1
