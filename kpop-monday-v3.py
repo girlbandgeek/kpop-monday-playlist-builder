@@ -65,8 +65,10 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
             vid_list=[]
             for iitem in match:
                 vid_list.append(iitem[1])
-            print("video ID's: ", vid_list)
-            rlist.append(vid_list)
+            # remove duplicate videos
+            new_vid_list = list(set(vid_list))
+            print("video ID's: ", new_vid_list)
+            rlist.append(new_vid_list)
         else:
             print(f"videos: NOT MATCHED!!!")
             rlist.append({})
