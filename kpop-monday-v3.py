@@ -105,6 +105,9 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
 htag = sys.argv[1]
 start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
 delta = timedelta(days=1, hours=12)
+# uncomment following 2 lines for Pacific time
+# adjust = timedelta(hours=8)
+# start_date = start_date - adjust
 # end_date = start_date + delta
 t_time = time(0, 0)
 my_min = datetime.datetime.combine(start_date, t_time)
