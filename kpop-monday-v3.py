@@ -10,8 +10,10 @@ import os
 import sys
 import re
 
-#from datetime import datetime, date, time, timezone
-
+# Define some variables
+start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
+tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
+day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
 
 load_dotenv()
 
@@ -98,20 +100,18 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     return results_dict
     
 
-# define some variables:
-
 # htag = 'FaceCards'
 # start_date = date(2025, 2, 17)
 htag = sys.argv[1]
 start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
-delta = timedelta(days=1, hours=12)
+# delta = timedelta(days=1, hours=12)
 # uncomment following 2 lines for Pacific time
 # adjust = timedelta(hours=8)
-# start_date = start_date - adjust
-# end_date = start_date + delta
-t_time = time(0, 0)
-my_min = datetime.datetime.combine(start_date, t_time)
-my_max = start_date + delta
+t_time = time(0, 0)  # minutes, seconds
+start_date = datetime.datetime.combine(start_date, t_time)
+# Implement date, time adustments
+my_min = start_date - start_buffer + tz_adjust
+my_max = my_min + day_len
 # For first go, set since_status to null:
 since_status=""
 output_dict={}
