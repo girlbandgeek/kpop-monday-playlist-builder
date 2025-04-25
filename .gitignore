@@ -3,3 +3,4 @@ config
 .env
 .swp
 client_secrets.json
+.python-version

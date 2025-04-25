@@ -22,6 +22,7 @@ def main():
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, credentials=credentials)
     
+    '''
     search_input = input("Please enter your search: "),
 
     # Search for 'Radiohead cover' videos
@@ -32,8 +33,13 @@ def main():
         type="video"
     )
     response = request.execute()
-
-    playlist_name = " ".join(search_input) + " Playlist"
+    
+    print("Search request output:")
+    print(response)
+    '''
+    
+    # playlist_name = " ".join(search_input) + " Playlist"
+    playlist_name = "KpopMonday Playlist for 2025-03-24: wantuback"
 
     create_playlist_response = youtube.playlists().insert(
         part="snippet,status",
@@ -45,19 +51,29 @@ def main():
                 "defaultLanguage": "en"
             },
             "status": {
-                "privacyStatus": "private"
+                "privacyStatus": "public"
             }
         }
     ).execute()
+    
+    print("Playlist response output:")
+    print(create_playlist_response)
 
     # Specify your playlist ID here
     playlist_id = create_playlist_response["id"]
 
+    '''
     # Add search results to the playlist
     for item in response.get("items", []):
         video_id = item["id"]["videoId"]
         add_video_to_playlist(youtube, video_id, playlist_id)
-
+    '''
+    
+    # Add videos to playlist_id
+    video_list = ['FxXCVxFZf2Q', 'wxs_Q2LFWNs', '-OBNH4V1Gv4', 'Uh_6PY9am_0', 'hF6Wds75rjg', 'y3KSD5sI0OM', 'Y9XXGztRM4Y', 'f5C-nNXUj_I', 'J6LAzgZi8N8', 'CeT--DbjtQI', '1mg1MRiky3o', 'Sa7QfiKGvfk', 'EiVmQZwJhsA', 'akPDKYwIoVk', 'fQj3jh90Q5s', 'URPYRLiGAnY', 'QDcfQQEhlJw', 'TnJqGMW4yts', '5LCGn9UFNAY', '28naAblMZmA', 'WM9DCnxXstI', 'IIj7j7mtNS4', 'sno_genwMz8', 'oL2AlXWVbKU', '6tK0XUQQ3wA', 'napCk8ZVlpw', 'Y_6VfzBl7yk', 'NpTpEsE9G8c', 'P5uE7KDkDFE', 'PvpRcDgd5jo', '9d9q-uTNKa4', 'J41qe-TM1DY', 'xnku4o3tRB4', 'vVBF6ZjS_Y8', '0lSSIQ4lE78']
+    for video_id in video_list:
+	    add_video_to_playlist(youtube, video_id, playlist_id)
+    
 def add_video_to_playlist(youtube, video_id, playlist_id):
     request = youtube.playlistItems().insert(
         part="snippet",
