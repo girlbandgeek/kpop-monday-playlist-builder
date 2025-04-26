@@ -14,6 +14,8 @@ import re
 start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
 tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
 day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
+# List of accounts not to include, e.g. not our own user and possibly others to block ;)
+excluded_users=['kpopmondayplaylistbot@mstdn.social']
 
 load_dotenv()
 
@@ -28,17 +30,14 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     print("hhtag", "mmy_min", "mmy_max", "since_stat", "max_key")
     print(hhtag, mmy_min, mmy_max, since_stat, max_key)
     hashtag_posts={}
-    # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max)
-    # hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = my_min, max_id = my_max, since_id = since_stat)
-    # Need to add if statement here. There will be 2 different "mastodon.timeline_hashtag" calls, depending on whether
-    # since_id has been set...
+    # There will be 2 different "mastodon.timeline_hashtag" calls, depending on whether since_id has been set...
+    # This is part of recursive logic, to handle API limit of ~20 statuses retrieved per call
     if since_stat == "":
         hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = mmy_min, max_id = mmy_max)
     else:
-        #hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, max_id = my_max, since_id = since_stat)
         hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = since_stat, max_id = mmy_max)
 
-
+    # convert list to dict
     hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
     hashtag_dict = dict(hashtag_dict)
 
@@ -83,16 +82,15 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
             # print(f"name of the tag: ", x["name"])
         print(f"tag_list: ", tag_list)
         
-        # Make sure we are getting only #kpopmonday statuses
-        if "kpopmonday" in tag_list:
-            rlist.append(tag_list)
-        else:
-            continue    # skip if missing #kpopmonday
-
         # we will use the status id as the dict key
-        kd_key = hashtag_dict[key]["id"]
-        results_dict[kd_key] = rlist
-
+        # Make sure we are getting only #kpopmonday statuses and also,
+        # Exclude statuses from list of excluded user
+        if "kpopmonday" in tag_list and hashtag_dict[key]["account"]["acct"].lower() not in excluded_users:
+            kd_key = hashtag_dict[key]["id"]
+            results_dict[kd_key] = rlist
+        else:
+            continue    # skip if desired conditions not met         
+        
     # Remove potential duplicate record 
     if max_key in results_dict.keys():
         del results_dict[max_key]
@@ -165,7 +163,6 @@ for key, value in stats_dict.items():
             leader_board = leader_board + ', ' + key
     else:
         continue
-
 
 
 print(f"Total number of posts for ", htag, "is: ", ccount)
