@@ -22,19 +22,25 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-stp1 = 'Hi! Here is the KpopMonday compilation playlist for February 03, 2025.'
-stp2 = 'This week\'s theme is #BirthdayWishes'
-stp3 = 'Total number of toots for  TwoSongsOneTitle is:  77'
-stp4 = 'Top contributor(s) this week with 3 toots:  nikunashi@ieji.de, abuelaskpop@kpop.social, JillsJoy@nerdjoy.social'
-stp5 = 'https://youtube.com/playlist?list=PLZyP4b181sFZoFwv7r6HIquhSQkM7L3I7&si=rOdZWmKQQgNI5VM6'
-stp6 = '#fake_tag'
-'''
-x = ' '.join(("multiline String ",
-			"Python Language",
-			"Welcome to GFG"))
-print(x)
-'''
-status_text = '\n\n'.join((stp1, stp2, stp3, stp4, stp5, stp6))
-print(status_text)
+xpl_date = 'February 17, 2025'
+xpl_hashtag = 'FaceCards'
+xpl_toot_count = 20
+xleaderboard = ['Erzbet@apobangpo.space']
+xhighscore = 6
+xpl_id = 'PLZyP4b181sFYm2j6Hr0RJhwl2X1b6QuPz'
 
-mastodon.status_post(status = status_text, visibility = "public")
+def my_toot(pl_date, pl_hashtag, pl_toot_count, leaderboard, highscore, pl_id):
+
+    stp1 = 'Hi! Here is the KpopMonday compilation playlist for ' + pl_date
+    stp2 = 'This week\'s theme is #' + pl_hashtag
+    stp3 = 'Total number of toots for ' + pl_hashtag + ' is: ' + str(pl_toot_count)
+    stp4 = 'Top contributor(s) this week with ' + str(highscore) + ' toots: ' + ', '.join(leaderboard)
+    stp5 = 'https://youtube.com/playlist?list=' + pl_id
+    stp6 = '#fake_tag'
+
+    status_text = '\n\n'.join((stp1, stp2, stp3, stp4, stp5, stp6))
+    print(status_text)
+
+    mastodon.status_post(status = status_text, visibility = "public")
+
+my_toot(xpl_date, xpl_hashtag, xpl_toot_count, xleaderboard, xhighscore, xpl_id)

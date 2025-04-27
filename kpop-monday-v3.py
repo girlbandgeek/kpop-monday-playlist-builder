@@ -91,7 +91,7 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         
         # we will use the status id as the dict key
         # Make sure we are getting only #kpopmonday statuses and also,
-        # Exclude statuses from list of excluded user
+        # Exclude statuses from list of excluded users
         if "kpopmonday" in tag_list and hashtag_dict[key]["account"]["acct"].lower() not in excluded_users:
             kd_key = hashtag_dict[key]["id"]
             results_dict[kd_key] = rlist
@@ -171,15 +171,25 @@ def add_video_to_playlist(youtube, video_id, playlist_id):
     except:
         print(f"Unable to add video with id: ", video_id)
 
+# Function to post the final status
+def my_toot(pl_date, pl_hashtag, pl_toot_count, leaderboard, highscore, pl_id):
 
-# htag = 'FaceCards'
-# start_date = date(2025, 2, 17)
+    stp1 = 'Hi! Here is the KpopMonday compilation playlist for ' + pl_date
+    stp2 = 'This week\'s theme is #' + pl_hashtag
+    stp3 = 'Total number of toots for ' + pl_hashtag + ' is: ' + str(pl_toot_count)
+    stp4 = 'Top contributor(s) this week with ' + str(highscore) + ' toots: ' + leaderboard
+    stp5 = 'https://youtube.com/playlist?list=' + pl_id
+    stp6 = '#fake_tag'
+
+    status_text = '\n\n'.join((stp1, stp2, stp3, stp4, stp5, stp6))
+    print(status_text)
+
+    mastodon.status_post(status = status_text, visibility = "public")
+
+###  MAIN SCRIPT EXECUTION  ###
 htag = sys.argv[1]
 start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
 start_date_str=start_date.strftime("%B %d, %Y")    # Generate a string for later
-# delta = timedelta(days=1, hours=12)
-# uncomment following 2 lines for Pacific time
-# adjust = timedelta(hours=8)
 t_time = time(0, 0)  # minutes, seconds
 start_date = datetime.datetime.combine(start_date, t_time)
 # Implement date, time adustments
@@ -204,8 +214,9 @@ while(True):
     print(f"max_key: ", max_key, "since_status: ", since_status, "max_key: ", max_key)
     output_dict.update(records_to_add)
 
-print("output_dict:")
-print(output_dict)
+# if needed for trouble shooting:
+# print("output_dict:")
+# print(output_dict)
 
 # Let's explore the relations betweeen the statuses and the timestamps
 ccount=0
@@ -221,7 +232,10 @@ der_count=0
 for key in sorted(output_dict.keys()):
     if output_dict[key][3] != []:
         for i_item in output_dict[key][3]:
-            playlist_vids.append(i_item)
+            if i_item not in playlist_vids:    # check for duplicates
+                playlist_vids.append(i_item)
+            else:
+                continue
     # playlist_vids.append(output_dict[key][3])
     if output_dict[key][2] in stats_dict.keys():
         stats_dict[output_dict[key][2]] = stats_dict[output_dict[key][2]] + 1
@@ -247,4 +261,6 @@ print(f"Playlist videos :", playlist_vids)
 print(f"Generate playlist for ", htag)
 video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
+# Make the toot to our bot account
+my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
