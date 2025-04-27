@@ -22,12 +22,12 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-xpl_date = 'February 17, 2025'
-xpl_hashtag = 'FaceCards'
-xpl_toot_count = 20
-xleaderboard = ['Erzbet@apobangpo.space']
-xhighscore = 6
-xpl_id = 'PLZyP4b181sFYm2j6Hr0RJhwl2X1b6QuPz'
+xpl_date = 'March 24, 2025'
+xpl_hashtag = 'WantUBack'
+xpl_toot_count = 30
+xleaderboard = ['abuelaskpop@kpop.social']
+xhighscore = 10
+xpl_id = 'PLZyP4b181sFaE23njQeWlP68ixdMr2PKw'
 
 def my_toot(pl_date, pl_hashtag, pl_toot_count, leaderboard, highscore, pl_id):
 
