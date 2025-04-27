@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 import os
 import sys
 import re
+import google_auth_oauthlib.flow
+import googleapiclient.discovery
+import googleapiclient.errors
 
 # Define some variables
 start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
@@ -16,6 +19,9 @@ tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
 day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
 # List of accounts not to include, e.g. not our own user and possibly others to block ;)
 excluded_users=['kpopmondayplaylistbot@mstdn.social']
+# Google API related:
+scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
+
 
 load_dotenv()
 
@@ -26,6 +32,7 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
+# Function to retrieve statuses from Mastodon
 def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     print("hhtag", "mmy_min", "mmy_max", "since_stat", "max_key")
     print(hhtag, mmy_min, mmy_max, since_stat, max_key)
@@ -96,12 +103,80 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         del results_dict[max_key]
 
     return results_dict
+
+# Function to create to playlist on YouTube
+def playlist_create(pl_videos, pl_datestring, pl_hashtag):
+    # Disable OAuthlib's HTTPS verification when running locally.
+    # DO NOT leave this option enabled in production.
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+    api_service_name = "youtube"
+    api_version = "v3"
+    client_secrets_file = "client_secrets.json"
+
+    # Get credentials and create an API client
+    flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+        client_secrets_file, scopes)
+    credentials = flow.run_local_server(port=0)
+    # credentials = flow.run_local_server(port=35353)
+    youtube = googleapiclient.discovery.build(
+        api_service_name, api_version, credentials=credentials)
     
+    # playlist_name = " ".join(search_input) + " Playlist"
+    playlist_name = "KpopMonday Playlist for " + pl_datestring + ":" + pl_hashtag
+
+    create_playlist_response = youtube.playlists().insert(
+        part="snippet,status",
+        body={
+            "snippet": {
+                "title": playlist_name,
+                "description": "A playlist created with the YouTube API for KpopMonday",
+                "tags": ["kpop", "kpopmonday"],
+                "defaultLanguage": "en"
+            },
+            "status": {
+                "privacyStatus": "public"
+            }
+        }
+    ).execute()
+    
+    print("Playlist response output:")
+    print(create_playlist_response)
+
+    # Specify your playlist ID here
+    playlist_id = create_playlist_response["id"]
+
+    # Add videos to playlist_id
+    for video_id in pl_videos:
+	    add_video_to_playlist(youtube, video_id, playlist_id)
+	    
+    return playlist_id
+    
+def add_video_to_playlist(youtube, video_id, playlist_id):
+    try:
+        request = youtube.playlistItems().insert(
+            part="snippet",
+            body={
+                "snippet": {
+                    "playlistId": playlist_id,
+                    "resourceId": {
+                        "kind": "youtube#video",
+                        "videoId": video_id
+                    }
+                }
+            }
+        )
+        response = request.execute()
+        print(f"Added video {video_id} to playlist {playlist_id}")
+    except:
+        print(f"Unable to add video with id: ", video_id)
+
 
 # htag = 'FaceCards'
 # start_date = date(2025, 2, 17)
 htag = sys.argv[1]
 start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
+start_date_str=start_date.strftime("%B %d, %Y")    # Generate a string for later
 # delta = timedelta(days=1, hours=12)
 # uncomment following 2 lines for Pacific time
 # adjust = timedelta(hours=8)
@@ -169,7 +244,7 @@ print(f"Total number of posts for ", htag, "is: ", ccount)
 print(f"Top contributor(s) this week with", leader_count, "posts are: ", leader_board)
 print(f"Playlist videos :", playlist_vids)
 
-'''
-print("stats_dict:")
-print(stats_dict)
-'''
+print(f"Generate playlist for ", htag)
+video_identifier=playlist_create(playlist_vids, start_date_str, htag)
+
+

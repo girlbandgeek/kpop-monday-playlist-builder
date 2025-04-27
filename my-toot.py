@@ -22,11 +22,11 @@ mastodon = Mastodon(
         api_base_url="https://mstdn.social"
 )
 
-stp1 = 'Hi! Here is the KpopMonday compilation playlist for December 2, 2024.'
-stp2 = 'This week\'s theme is #TwoSongsOneTitle'
+stp1 = 'Hi! Here is the KpopMonday compilation playlist for February 03, 2025.'
+stp2 = 'This week\'s theme is #BirthdayWishes'
 stp3 = 'Total number of toots for  TwoSongsOneTitle is:  77'
-stp4 = 'Top contributor(s) this week with 31 toots:  Erzbet@apobangpo.space'
-stp5 = 'https://youtube.com/playlist?list=PLZyP4b181sFYgqLdKYRNzFhWVx1_iYWwp&si=zMl2upkP9OV34UJu'
+stp4 = 'Top contributor(s) this week with 3 toots:  nikunashi@ieji.de, abuelaskpop@kpop.social, JillsJoy@nerdjoy.social'
+stp5 = 'https://youtube.com/playlist?list=PLZyP4b181sFZoFwv7r6HIquhSQkM7L3I7&si=rOdZWmKQQgNI5VM6'
 stp6 = '#fake_tag'
 '''
 x = ' '.join(("multiline String ",
