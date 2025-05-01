@@ -32,11 +32,23 @@ This is a little script I hacked together for fun as a result of my participatio
 - If you're running this on a Mac, avoid using the system Python. I had good luck using pyenv. This is a good pyenv resource: https://realpython.com/intro-to-pyenv/
 
 ## Installation
+- Ensure that the requirements noted above regarding python version and necessary modules have been met.
+- Create the Mastodon app and add them to the .env file. There is an env.EXAMPLE file that can be used as a template.
+- Set up the application in the Google cloud console, as noted above, and save the client_secrets.json file to kpop-monday-playlist-builder folder._
 
 ## Running the Script
+- Run the script as shown below, providing the hashtag to be searched and date in YYYY-MM-DD format:
+
+```
+python kpop-monday.py SoloLadiesOfKpop 2025-03-10
+```
+
+- Querying the Mastodon server, and building the list of videos completes first, usually within 15 seconds.
+- When the API call is made to Google, an authorization tab will open in your browser. Choose your account, and click on continue. At this point the playlist will be inserted, and one by one the videos will be added.
+- If everything worked as expected, a toot will be posted to the Mastodon account with the link to the playlist.
 
 ## Acknowledgments
 - This video got me started with the Mastodon api: https://www.youtube.com/watch?v=W3kb6aImHf8
 - Then I found the Mastodon.py module, which is fully featured and has documentation here: https://mastodonpy.readthedocs.io/en/stable/index.html
 - The YouTube playlist generation is largely lifted from https://github.com/umutulay/youtube-playlist-automation
-- Thanks to the Mastodon K-pop fandom and @Erzbet@apobangpo.space who decides the weekly theme - you bring joy to my life!
+- Thanks to the Mastodon K-pop fandom and all the participants in KpopMonday - you bring joy to my life!
