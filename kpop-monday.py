@@ -179,7 +179,7 @@ def my_toot(pl_date, pl_hashtag, pl_toot_count, leaderboard, highscore, pl_id):
     stp3 = 'Total number of toots for ' + pl_hashtag + ' is: ' + str(pl_toot_count)
     stp4 = 'Top contributor(s) this week with ' + str(highscore) + ' toots: ' + leaderboard
     stp5 = 'https://youtube.com/playlist?list=' + pl_id
-    stp6 = '#fake_tag'
+    stp6 = '#kpopmonday #kpop'
 
     # Leaving out leaderboard based on feedback
     status_text = '\n\n'.join((stp1, stp2, stp3, stp5, stp6))
@@ -263,5 +263,5 @@ print(f"Generate playlist for ", htag)
 video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
-# my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
