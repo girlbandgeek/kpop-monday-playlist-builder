@@ -12,7 +12,7 @@ import re
 
 # Define some variables
 start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
-tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
+tz_adjust = timedelta(hours=0)  # Set to -7 for computer in Pacific time
 day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
 
 load_dotenv()
