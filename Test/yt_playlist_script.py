@@ -15,10 +15,23 @@ def playlist_create(pl_videos, pl_datestring, pl_hashtag):
     client_secrets_file = "client_secrets.json"
 
     # Get credentials and create an API client
+    #flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+    #    client_secrets_file, scopes)
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-        client_secrets_file, scopes)
-    credentials = flow.run_local_server(port=0)
-    # credentials = flow.run_local_server(port=35353)
+        client_secrets_file, scopes, redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+
+    # Tell the user to go to the authorization URL:
+    auth_url, _ = flow.authorization_url(prompt='consent')
+
+    print('Please go this URL: {}'.format(auth_url))
+
+    # The user will get an authorization code. This code is used to get the
+    # access token.
+    code = input('Enter the authorization code: ')
+    flow.fetch_token(code=code)
+
+    # credentials = flow.run_local_server(port=0)
+    credentials = flow.credentials
     youtube = googleapiclient.discovery.build(
         api_service_name, api_version, credentials=credentials)
     
