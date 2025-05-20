@@ -15,8 +15,10 @@ import googleapiclient.errors
 
 # Define some variables
 start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
-tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
-day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
+# tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
+tz_adjust = timedelta(hours=0)  # Set to -7 for computer in Pacific time
+# day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
+day_len = timedelta(days=2, hours=4)  # Total length of kpopmonday, e.g. 36 hrs; bumping up for late folks
 # List of accounts not to include, e.g. not our own user and possibly others to block ;)
 excluded_users=['kpopmondayplaylistbot@mstdn.social']
 # Google API related:
@@ -284,5 +286,5 @@ print(f"Generate playlist for ", htag)
 video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
-my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+# my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
