@@ -286,5 +286,5 @@ print(f"Generate playlist for ", htag)
 video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
-# my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
