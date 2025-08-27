@@ -23,6 +23,7 @@ This is a little script I hacked together for fun as a result of my participatio
 - Download the Client secret json file, and save it as "client_secrets.json" in the root of the kpop-monday-playlist-builder folder
 - As with the Mastodon secrets, the google client secrets should be secured to prevent unauthorized access to your account
 - Because I am only going to use this to create playlists in my own account, I set the status to "Testing" and added my google account to the list of test users. This gets around further validation steps that are beyond the scope of my effort. Otherwise an Oauth error is generated and inserting the playlist in YouTube fails.
+- Note that there are two ways to authenticate the YouTube API client. The _original_ way opens up a browser on the machine where the script is running and you will follow the prompts to authenticate and permit the API access to your account. The _new_ way displays the authentication URL on the terminal window. You will paste this URL into the browser (can be on another machine), follow the prompts until the authorization code is displayed. Then enter that code into the terminal window to continue. 
 
 ## Other Caveats
 - Initially I conceived of this as a fully automated process that could run in a cron job without human intervention.
@@ -45,7 +46,7 @@ python kpop-monday.py SoloLadiesOfKpop 2025-03-10
 
 - Querying the Mastodon server, and building the list of videos completes first, usually within 15 seconds.
 - When the API call is made to Google, an authorization tab will open in your browser. Choose your account, and click on continue. 
-- Alternately, if you have enabled the _new_ Oauth flow, a url will be displayed in the terminal. Paste the url into your browser and follow the prompts to allow KPopMondayBot to make changes. After you click three about 3 screens an authorization code will be displayed. Copy this code and enter into the terminal window where the script is running.
+- Alternately, if you have enabled the _new_ Oauth flow, a url will be displayed in the terminal. Paste the url into your browser and follow the prompts to allow KPopMondayBot to make changes. After you click through about 3 screens an authorization code will be displayed. Copy this code and enter into the terminal window where the script is running.
 - At this point the playlist will be inserted, and one by one the videos will be added.
 - If everything worked as expected, a toot will be posted to the Mastodon account with the link to the playlist.
 
