@@ -44,7 +44,9 @@ python kpop-monday.py SoloLadiesOfKpop 2025-03-10
 ```
 
 - Querying the Mastodon server, and building the list of videos completes first, usually within 15 seconds.
-- When the API call is made to Google, an authorization tab will open in your browser. Choose your account, and click on continue. At this point the playlist will be inserted, and one by one the videos will be added.
+- When the API call is made to Google, an authorization tab will open in your browser. Choose your account, and click on continue. 
+- Alternately, if you have enabled the _new_ Oauth flow, a url will be displayed in the terminal. Paste the url into your browser and follow the prompts to allow KPopMondayBot to make changes. After you click three about 3 screens an authorization code will be displayed. Copy this code and enter into the terminal window where the script is running.
+- At this point the playlist will be inserted, and one by one the videos will be added.
 - If everything worked as expected, a toot will be posted to the Mastodon account with the link to the playlist.
 
 ## Acknowledgments
