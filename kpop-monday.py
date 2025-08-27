@@ -14,16 +14,15 @@ import googleapiclient.discovery
 import googleapiclient.errors
 
 # Define some variables
-start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
-# tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
-tz_adjust = timedelta(hours=0)  # Set to -7 for computer in Pacific time
-# day_len = timedelta(days=1, hours=12)  # Total length of kpopmonday, e.g. 36 hrs
+# start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
+start_buffer = timedelta(hours=15)  # Bonus time *before* 00:00
+tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
 day_len = timedelta(days=2, hours=4)  # Total length of kpopmonday, e.g. 36 hrs; bumping up for late folks
 # List of accounts not to include, e.g. not our own user and possibly others to block ;)
 excluded_users=['kpopmondayplaylistbot@mstdn.social']
+
 # Google API related:
 scopes = ["https://www.googleapis.com/auth/youtube.force-ssl"]
-
 
 load_dotenv()
 
@@ -62,7 +61,6 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         print(f"account id: ", hashtag_dict[key]["account"]["id"])
         print(f"account name: ", hashtag_dict[key]["account"]["acct"])
         
-        # rlist.append(hashtag_dict[key]["id"])
         rlist.append(hashtag_dict[key]["created_at"])
         rlist.append(hashtag_dict[key]["account"]["id"])
         rlist.append(hashtag_dict[key]["account"]["acct"])
@@ -122,12 +120,10 @@ def playlist_create(pl_videos, pl_datestring, pl_hashtag):
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
         client_secrets_file, scopes)
     credentials = flow.run_local_server(port=0)
-    # credentials = flow.run_local_server(port=35353)
-
     '''
     
-    # This is new way, which uses browser on different machine from
-    # where the script is running
+    # This is new way, which facilitates retrieving the Oauth authorization code
+    # on a different machine from where the script is executed. 
     flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
         client_secrets_file, scopes, redirect_uri='urn:ietf:wg:oauth:2.0:oob')
 
@@ -260,7 +256,7 @@ for key in sorted(output_dict.keys()):
                 playlist_vids.append(i_item)
             else:
                 continue
-    # playlist_vids.append(output_dict[key][3])
+
     if output_dict[key][2] in stats_dict.keys():
         stats_dict[output_dict[key][2]] = stats_dict[output_dict[key][2]] + 1
     else:
@@ -277,12 +273,12 @@ for key, value in stats_dict.items():
     else:
         continue
 
-
 print(f"Total number of posts for ", htag, "is: ", ccount)
 print(f"Top contributor(s) this week with", leader_count, "posts are: ", leader_board)
 print(f"Playlist videos :", playlist_vids)
-
 print(f"Generate playlist for ", htag)
+
+# Generate the playlist
 video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
