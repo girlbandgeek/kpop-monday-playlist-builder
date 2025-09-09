@@ -34,6 +34,9 @@ mastodon = Mastodon(
 )
 
 # Function to retrieve statuses from Mastodon
+# Logic updated on 2025-09-08 to search for #kpopmonday posts, and filter the specific theme later.
+# This works around a problem that occurs when the themed tag is too common, and script quits without
+# returning any videos.
 def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     print("hhtag", "mmy_min", "mmy_max", "since_stat", "max_key")
     print(hhtag, mmy_min, mmy_max, since_stat, max_key)
@@ -41,9 +44,9 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
     # There will be 2 different "mastodon.timeline_hashtag" calls, depending on whether since_id has been set...
     # This is part of recursive logic, to handle API limit of ~20 statuses retrieved per call
     if since_stat == "":
-        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = mmy_min, max_id = mmy_max)
+        hashtag_posts=mastodon.timeline_hashtag(hashtag = "kpopmonday", min_id = mmy_min, max_id = mmy_max)
     else:
-        hashtag_posts=mastodon.timeline_hashtag(hashtag = hhtag, min_id = since_stat, max_id = mmy_max)
+        hashtag_posts=mastodon.timeline_hashtag(hashtag = "kpopmonday", min_id = since_stat, max_id = mmy_max)
 
     # convert list to dict
     hashtag_dict = [(index, item) for index, item in enumerate(hashtag_posts)]
@@ -92,7 +95,7 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         # we will use the status id as the dict key
         # Make sure we are getting only #kpopmonday statuses and also,
         # Exclude statuses from list of excluded users
-        if "kpopmonday" in tag_list and hashtag_dict[key]["account"]["acct"].lower() not in excluded_users:
+        if hhtag in tag_list and hashtag_dict[key]["account"]["acct"].lower() not in excluded_users:
             kd_key = hashtag_dict[key]["id"]
             results_dict[kd_key] = rlist
         else:
@@ -279,7 +282,7 @@ print(f"Playlist videos :", playlist_vids)
 print(f"Generate playlist for ", htag)
 
 # Generate the playlist
-video_identifier=playlist_create(playlist_vids, start_date_str, htag)
+# video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
 # my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
