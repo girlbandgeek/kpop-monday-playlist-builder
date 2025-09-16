@@ -88,14 +88,14 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         tag_dict = hashtag_dict[key]["tags"]
         tag_list=[]
         for x in tag_dict:
-            tag_list.append(x["name"])
+            tag_list.append(x["name"].lower())
             # print(f"name of the tag: ", x["name"])
         print(f"tag_list: ", tag_list)
         
         # we will use the status id as the dict key
         # Make sure we are getting only #kpopmonday statuses and also,
         # Exclude statuses from list of excluded users
-        if hhtag in tag_list and hashtag_dict[key]["account"]["acct"].lower() not in excluded_users:
+        if hhtag.lower() in tag_list and hashtag_dict[key]["account"]["acct"].lower() not in excluded_users:
             kd_key = hashtag_dict[key]["id"]
             results_dict[kd_key] = rlist
         else:
@@ -282,8 +282,8 @@ print(f"Playlist videos :", playlist_vids)
 print(f"Generate playlist for ", htag)
 
 # Generate the playlist
-# video_identifier=playlist_create(playlist_vids, start_date_str, htag)
+video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
-# my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
