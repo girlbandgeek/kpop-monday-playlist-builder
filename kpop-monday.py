@@ -17,7 +17,7 @@ import googleapiclient.errors
 # start_buffer = timedelta(hours=2)  # Bonus time *before* 00:00
 start_buffer = timedelta(hours=15)  # Bonus time *before* 00:00 - normally what we use
 tz_adjust = timedelta(hours=-7)  # Set to -7 for computer in Pacific time
-day_len = timedelta(days=2, hours=4)  # Total length of kpopmonday, e.g. 36 hrs; bumping up for late folks
+day_len = timedelta(days=2, hours=6)  # Total length of kpopmonday, e.g. 36 hrs; bumping up for late folks
 # List of accounts not to include, e.g. not our own user and possibly others to block ;)
 excluded_users=['kpopmondayplaylistbot@mstdn.social']
 
@@ -70,7 +70,8 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
 
         ccontent = hashtag_dict[key]["content"]
 
-        match = re.findall(r'(www\.youtube\.com/watch\?v=|youtu\.be/)([\w-]+)', ccontent)
+        # match = re.findall(r'(www\.youtube\.com/watch\?v=|youtu\.be/)([\w-]+)', ccontent)
+        match = re.findall(r'(www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
         if len(match) > 0: 
             print(f"videos: ", match)
             vid_list=[]
