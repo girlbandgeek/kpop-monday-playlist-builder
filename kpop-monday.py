@@ -71,7 +71,9 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         ccontent = hashtag_dict[key]["content"]
 
         # match = re.findall(r'(www\.youtube\.com/watch\?v=|youtu\.be/)([\w-]+)', ccontent)
-        match = re.findall(r'(www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
+        # match = re.findall(r'(www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
+        match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
+
         if len(match) > 0: 
             print(f"videos: ", match)
             vid_list=[]
