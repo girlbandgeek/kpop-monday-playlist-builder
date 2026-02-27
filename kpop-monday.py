@@ -73,7 +73,7 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         # match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
         match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)', ccontent)
 
-        if len(match) > 0: 
+        if len(match) > 0:
             print(f"videos: ", match)
             vid_list=[]
             for iitem in match:

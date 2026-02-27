@@ -5,7 +5,7 @@ Create a YouTube playlist from videos submitted to a hashtag on Mastodon.
 This is a little script I hacked together for fun as a result of my participation in the KpopMonday hashtag on Mastodon. Each week on Monday a theme is posted, and participants post YouTube videos of K-pop songs that match the theme. I thought it would be fun to create a playlist for each week and post it at a dedicated bot account. This script is the result of that effort.
 
 ## General Requirements
-- Recent python3 (I am running this with python 3.12.3 on MacOS 11.7.10)
+- Recent python3 (I am running this with python 3.12.3 on MacOS 11.7.10 and Ubuntu 24.04.4 LTS)
 - modules: Mastodon.py, dotenv
 - google specific modules: google-auth, google-auth-oauthlib, google-api-python-client
  
@@ -35,7 +35,7 @@ This is a little script I hacked together for fun as a result of my participatio
 ## Installation
 - Ensure that the requirements noted above regarding python version and necessary modules have been met.
 - Create the Mastodon app and add them to the .env file. There is an env.EXAMPLE file that can be used as a template.
-- Set up the application in the Google cloud console, as noted above, and save the client_secrets.json file to kpop-monday-playlist-builder folder._
+- Set up the application in the Google cloud console, as noted above, and save the client_secrets.json file to kpop-monday-playlist-builder folder.
 
 ## Running the Script
 - Run the script as shown below, providing the hashtag to be searched and date in YYYY-MM-DD format:

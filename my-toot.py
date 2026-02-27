@@ -24,12 +24,12 @@ mastodon = Mastodon(
 
 # Set the variables here
 # Don't forget to check the Playlist ID!!!
-xpl_date = 'September 8, 2025'
-xpl_hashtag = 'NowPlaying'
-xpl_toot_count = 38
+xpl_date = 'February 2, 2026'
+xpl_hashtag = 'SadSong'
+xpl_toot_count = 39
 xleaderboard = ['anybody@example.com']
 xhighscore = 5
-xpl_id = 'PLZyP4b181sFYm6mpq0vujZPdWSJWglmq3'
+xpl_id = 'PLZyP4b181sFYgcyULnBGvv2K3tfc5xE3X'
 
 
 def my_toot(pl_date, pl_hashtag, pl_toot_count, leaderboard, highscore, pl_id):
