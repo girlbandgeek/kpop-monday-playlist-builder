@@ -63,6 +63,8 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
         print(f"created_at: ", hashtag_dict[key]["created_at"])
         print(f"account id: ", hashtag_dict[key]["account"]["id"])
         print(f"account name: ", hashtag_dict[key]["account"]["acct"])
+        # Add for testing
+        print(f"content: ", hashtag_dict[key]["content"])
         
         rlist.append(hashtag_dict[key]["created_at"])
         rlist.append(hashtag_dict[key]["account"]["id"])
@@ -284,8 +286,8 @@ print(f"Playlist videos :", playlist_vids)
 print(f"Generate playlist for ", htag)
 
 # Generate the playlist
-video_identifier=playlist_create(playlist_vids, start_date_str, htag)
+# video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
 # Make the toot to our bot account
-my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+# my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
