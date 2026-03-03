@@ -8,7 +8,19 @@ my_content = ['<p>I love when kpop does Spanish, and this one is one of my absol
 
 for ccontent in my_content:
     # match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
-    match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)', ccontent)
+    # match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)', ccontent)
+
+    # Note: above expression is working. Below, trying to work out how to put regex
+    # on multiple lines for clarity. Currently not working :()
+
+    match = re.compile(r"""(\
+        m\.youtube\.com/watch\?v=\
+        |www\.youtube\.com/watch\?v=\
+        |www\.youtube\.com/v/\
+        |youtu\.be/|www\.youtube\.com/watch\?si=)\
+        ([\w-]+)""", ccontent)
+
+    match = re.findall
 
     if len(match) > 0:
         print(f"videos: ", match)
@@ -21,4 +33,4 @@ for ccontent in my_content:
         # rlist.append(new_vid_list)
     else:
         print(f"videos: NOT MATCHED!!!")
-        rlist.append([])
+        # rlist.append([])
