@@ -13,14 +13,31 @@ for ccontent in my_content:
     # Note: above expression is working. Below, trying to work out how to put regex
     # on multiple lines for clarity. Currently not working :()
 
-    match = re.compile(r"""(\
-        m\.youtube\.com/watch\?v=\
-        |www\.youtube\.com/watch\?v=\
-        |www\.youtube\.com/v/\
-        |youtu\.be/|www\.youtube\.com/watch\?si=)\
-        ([\w-]+)""", ccontent)
+#    pattern = re.compile(r"""(\
+#        m\.youtube\.com/watch\?v=\
+#        |www\.youtube\.com/watch\?v=\
+#        |www\.youtube\.com/v/\
+#        |youtu\.be/|www\.youtube\.com/watch\?si=)\
+#        ([\w-]+)""")
 
-    match = re.findall
+#    pattern = re.compile(r"""(m\.youtube\.com/watch\?v=
+#                              |www\.youtube\.com/watch\?v=
+#                              |www\.youtube\.com/v/
+#                              |youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)""")
+
+    videoPattern = '|'.join([
+	# Normal watch URL   :: r'[0-9A-Za-z_-]{11}',
+	r'/www\.youtube\.com/watch(_popup)?(\.php)?/?\?(\S*&)?v=[0-9A-Za-z_-]{11}',
+	r'm\.youtube\.com/watch\?v=[0-9A-Za-z_-]{11}',
+	r'www\.youtube\.com/watch\?v=[0-9A-Za-z_-]{11}',
+	r'www\.youtube\.com/v/[0-9A-Za-z_-]{11}',
+	r'youtu\.be/[0-9A-Za-z_-]{11}',
+	r'www\.youtube\.com/watch\?si=[0-9A-Za-z_-]{11}'
+	])
+
+    pattern = re.compile(videoPattern)
+
+    match = pattern.findall(ccontent)
 
     if len(match) > 0:
         print(f"videos: ", match)
