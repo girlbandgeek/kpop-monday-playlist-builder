@@ -35,6 +35,8 @@ for ccontent in my_content:
 	r'www\.youtube\.com/watch\?si=[0-9A-Za-z_-]{11}'
 	])
 
+    print(videoPattern)
+
     pattern = re.compile(videoPattern)
 
     match = pattern.findall(ccontent)
