@@ -38,9 +38,17 @@ for ccontent in my_content:
 	r'www\.youtube\.com/watch\?si='
 	])
 
-    videoPattern = vPattern + '([\w-]+)'
-
+    print("vPattern: ")
+    print(vPattern)
+    print()
+    borgle = '([\\w-]+)'
+    print("borgle: ")
+    print(borgle)
+    print()
+    videoPattern = vPattern + borgle
+    print("videoPattern: ")
     print(videoPattern)
+    print()
 
     pattern = re.compile(videoPattern)
     print(pattern)
