@@ -70,8 +70,8 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
 
         ccontent = hashtag_dict[key]["content"]
 
-        # match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/)([\w-]+)', ccontent)
-        match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)', ccontent)
+        # match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)', ccontent)
+        match = re.findall(r'(m\.youtube\.com/watch\?v=|[www\.]?youtube\.com/watch\?v=|[www\.]?youtube\.com/v/|youtu\.be/|[www\.]?youtube\.com/watch\?si=)([\w-]+)', ccontent)
 
         if len(match) > 0:
             print(f"videos: ", match)
@@ -280,6 +280,7 @@ for key, value in stats_dict.items():
 
 print(f"Total number of posts for ", htag, "is: ", ccount)
 print(f"Top contributor(s) this week with", leader_count, "posts are: ", leader_board)
+print(f"Total number of videos:", len(playlist_vids))
 print(f"Playlist videos :", playlist_vids)
 print(f"Generate playlist for ", htag)
 
