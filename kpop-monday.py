@@ -1,5 +1,6 @@
 # Pull selected statuses with Mastodon API and process them
 from mastodon import Mastodon
+import argparse
 import datetime
 from datetime import date
 from datetime import timedelta
@@ -212,8 +213,18 @@ def my_toot(pl_date, pl_hashtag, pl_toot_count, leaderboard, highscore, pl_id):
     mastodon.status_post(status = status_text, visibility = "public")
 
 ###  MAIN SCRIPT EXECUTION  ###
-htag = sys.argv[1]
-start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
+parser = argparse.ArgumentParser()
+parser.add_argument("htag")
+parser.add_argument("date_arg")
+parser.add_argument("-d", "--dryrun", help="do not generate playlist or toot", action="store_true")
+# This will be implemented later
+# parser.add_argument("-j", "--json", help="save output in json format", action="store_true")
+args = parser.parse_args()
+htag = args.htag
+
+# htag = sys.argv[1]
+# start_date = datetime.datetime.strptime(sys.argv[2], '%Y-%m-%d')
+start_date = datetime.datetime.strptime(args.date_arg, '%Y-%m-%d')
 start_date_str=start_date.strftime("%B %d, %Y")    # Generate a string for later
 t_time = time(0, 0)  # minutes, seconds
 start_date = datetime.datetime.combine(start_date, t_time)
@@ -284,9 +295,12 @@ print(f"Total number of videos:", len(playlist_vids))
 print(f"Playlist videos :", playlist_vids)
 print(f"Generate playlist for ", htag)
 
-# Generate the playlist
-video_identifier=playlist_create(playlist_vids, start_date_str, htag)
+if args.dryrun:
+    print("dry-run requested. playlist and toot not generated.")
+else:
+    # Generate the playlist
+    video_identifier=playlist_create(playlist_vids, start_date_str, htag)
 
-# Make the toot to our bot account
-my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+    # Make the toot to our bot account
+    my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
