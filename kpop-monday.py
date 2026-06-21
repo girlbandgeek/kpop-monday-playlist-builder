@@ -298,6 +298,7 @@ print(f"Generate playlist for ", htag)
 
 if args.dryrun:
     print("dry-run requested. playlist and toot not generated.")
+    video_identifier=""
 else:
     # Generate the playlist
     video_identifier=playlist_create(playlist_vids, start_date_str, htag)
@@ -306,5 +307,16 @@ else:
     my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
 
 if args.json:
-    print("json output requested")
-
+    out_file_name = htag + '.json'
+    print("json output requested. File", out_file_name, "will be created")
+    if video_identifier:
+        playlistID=video_identifier
+    else:
+        playlistID='dummy_playlist_id'
+    json_dict={}    # initialize dict to contain output
+    json_dict['theme']=htag
+    json_dict['playlistID']=playlistID
+    json_dict['date']=args.date_arg
+    json_dict['theme_vids']=playlist_vids
+    with open(out_file_name, "w") as outfile:
+        json.dump(json_dict, outfile)
