@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 import os
 import sys
 import re
+import json
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 import googleapiclient.errors
@@ -218,7 +219,7 @@ parser.add_argument("htag")
 parser.add_argument("date_arg")
 parser.add_argument("-d", "--dryrun", help="do not generate playlist or toot", action="store_true")
 # This will be implemented later
-# parser.add_argument("-j", "--json", help="save output in json format", action="store_true")
+parser.add_argument("-j", "--json", help="save output in json format", action="store_true")
 args = parser.parse_args()
 htag = args.htag
 
@@ -303,4 +304,7 @@ else:
 
     # Make the toot to our bot account
     my_toot(start_date_str, htag, ccount, leader_board, leader_count, video_identifier)
+
+if args.json:
+    print("json output requested")
 
