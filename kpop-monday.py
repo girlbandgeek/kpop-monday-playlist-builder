@@ -72,8 +72,8 @@ def retrieve_statuses(hhtag, mmy_min, mmy_max, since_stat, max_key):
 
         ccontent = hashtag_dict[key]["content"]
 
-        # match = re.findall(r'(m\.youtube\.com/watch\?v=|www\.youtube\.com/watch\?v=|www\.youtube\.com/v/|youtu\.be/|www\.youtube\.com/watch\?si=)([\w-]+)', ccontent)
-        match = re.findall(r'(m\.youtube\.com/watch\?v=|[www\.]?youtube\.com/watch\?v=|[www\.]?youtube\.com/v/|youtu\.be/|[www\.]?youtube\.com/watch\?si=)([\w-]+)', ccontent)
+        # match = re.findall(r'(m\.youtube\.com/watch\?v=|[www\.]?youtube\.com/watch\?v=|[www\.]?youtube\.com/v/|youtu\.be/|[www\.]?youtube\.com/watch\?si=)([\w-]+)', ccontent)
+        match = re.findall(r'(m\.youtube\.com/watch\?v=|[www\.]?youtube\.com/watch\?v=|[www\.]?youtube\.com/v/|youtu\.be/|[www\.]?youtube\.com/watch\?si=)([A-Za-z0-9_-]{10}[AEIMQUYcgkosw048])', ccontent)
 
         if len(match) > 0:
             print(f"videos: ", match)
@@ -320,3 +320,4 @@ if args.json:
     json_dict['theme_vids']=playlist_vids
     with open(out_file_name, "w") as outfile:
         json.dump(json_dict, outfile)
+

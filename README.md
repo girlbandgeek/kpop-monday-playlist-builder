@@ -41,9 +41,12 @@ This is a little script I hacked together for fun as a result of my participatio
 - Run the script as shown below, providing the hashtag to be searched and date in YYYY-MM-DD format:
 
 ```
-python kpop-monday.py SoloLadiesOfKpop 2025-03-10
+python kpop-monday.py SoloLadiesOfKpop 2025-03-10 [-d -j]
 ```
 
+- There are two optional arguments:
+  - -d \--dryrun - Query Mastodon and display list of videos but don't create a playlist or post.
+  - -j \--json - Create output file in json format. File will be named \<hashtag\>.json and created in the working directory.
 - Querying the Mastodon server, and building the list of videos completes first, usually within 15 seconds.
 - When the API call is made to Google, an authorization tab will open in your browser. Choose your account, and click on continue. 
 - Alternately, if you have enabled the _new_ Oauth flow, a url will be displayed in the terminal. Paste the url into your browser and follow the prompts to allow KPopMondayBot to make changes. After you click through about 3 screens an authorization code will be displayed. Copy this code and enter into the terminal window where the script is running.
