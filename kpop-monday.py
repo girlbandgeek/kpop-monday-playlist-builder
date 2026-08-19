@@ -220,7 +220,9 @@ parser.add_argument("date_arg")
 parser.add_argument("-d", "--dryrun", help="do not generate playlist or toot", action="store_true")
 # This will be implemented later
 parser.add_argument("-j", "--json", help="save output in json format", action="store_true")
+parser.add_argument("-e", "--enrich", help="enrich json file with (required) playlist id", default='dummy_playlist_id')
 args = parser.parse_args()
+playlist_overide=args.enrich
 htag = args.htag
 
 # htag = sys.argv[1]
@@ -312,7 +314,7 @@ if args.json:
     if video_identifier:
         playlistID=video_identifier
     else:
-        playlistID='dummy_playlist_id'
+        playlistID=playlist_overide
     json_dict={}    # initialize dict to contain output
     json_dict['theme']=htag
     json_dict['playlistID']=playlistID
